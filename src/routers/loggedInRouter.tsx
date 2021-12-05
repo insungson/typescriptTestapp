@@ -1,12 +1,11 @@
 import React from "react";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
+import HomePage from "../pages/HomePage";
 const LoggedInRouter: React.FC = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route />
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+    </Routes>
   );
 };
 
