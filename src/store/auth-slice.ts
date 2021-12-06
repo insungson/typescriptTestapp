@@ -45,6 +45,7 @@ const logOutHandler: () => void = () => {
 };
 //로컬스토리지 토큰처리용 함수
 const logInHandler = (token: string, expirationTime: string) => {
+  console.log("expirationTime: ", expirationTime);
   localStorage.setItem("token", token);
   localStorage.setItem("expirationTime", expirationTime);
 
@@ -61,7 +62,10 @@ const authSlice = createSlice({
     isLoggedIn: false,
   } as authState, //이렇게 타입캐스팅하는게 일단은 최선인거 같다...
   reducers: {
-    logIn: (state, action) => {
+    logIn: (
+      state,
+      action: PayloadAction<{ token: string; expirationTime: string }>
+    ) => {
       const { token, expirationTime } = action.payload;
       logInHandler(token, expirationTime);
       // 위에서 토큰설정이 되면 아래서 토큰 검증
