@@ -18,3 +18,11 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 export default store;
 
 export const API_KEY = "AIzaSyBwuX3ywjJQxmnljVptj8b8ERxX7SlKLAk";
+
+export type googleapisType = {
+  idToken: string;
+  email: string;
+  refreshToken: string;
+  expiresIn: string;
+  localId: string;
+};
