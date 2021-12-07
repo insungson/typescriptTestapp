@@ -1,15 +1,22 @@
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import AuthPage from "../pages/AuthPage";
+import ProfilePage from "../pages/ProfilePage";
+
 import { useAppSelector } from "../store/index";
 
 const LoggedInRouter: React.FC = () => {
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
+  // 기존의 <Redirect to='/auth' />  대신... <Navigate to='/auth' />  로 바뀌게 되었다.
+  // (다른 모든 라우터를 나타내는 * 일때.. Navigate to 로 처리하면 Route 내부의 Redirect 와 같은 역할을 한다!!)
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
       {!isLoggedIn && <Route path="/auth" element={<AuthPage />} />}
+      {isLoggedIn && <Route path="/profile" element={<ProfilePage />} />}
+      {!isLoggedIn && <Navigate to="/auth" />}
+      <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
 };
