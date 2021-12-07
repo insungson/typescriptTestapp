@@ -1,10 +1,12 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
 import authSlice, { authSliceName } from "./auth-slice";
+import quotesSlice, { quotesSliceName } from "./quotes-slice";
 
 const store = configureStore({
   reducer: {
     [authSliceName]: authSlice,
+    [quotesSliceName]: quotesSlice,
   },
 });
 
@@ -18,6 +20,9 @@ export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 export default store;
 
 export const API_KEY = "AIzaSyBwuX3ywjJQxmnljVptj8b8ERxX7SlKLAk";
+export const FIREBASE_DOMAIN =
+  "https://react-http-text-default-rtdb.firebaseio.com/yoyo/";
+
 export type googleapisType = {
   localId: string;
   email: string;

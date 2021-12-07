@@ -26,9 +26,14 @@ const Header: React.FC = () => {
             </li>
           )}
           {isLoggedIn && (
-            <li>
-              <Link to="/profile">Profile</Link>
-            </li>
+            <React.Fragment>
+              <li>
+                <Link to="/profile">Profile</Link>
+              </li>
+              <li>
+                <Link to="/quotes">Quotes</Link>
+              </li>
+            </React.Fragment>
           )}
           {isLoggedIn && (
             <li>

@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import HomePage from "../pages/HomePage";
 import AuthPage from "../pages/AuthPage";
 import ProfilePage from "../pages/ProfilePage";
+import AllQuotes from "../pages/AllQuotes";
 
 import { useAppSelector } from "../store/index";
 
@@ -13,9 +14,14 @@ const LoggedInRouter: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<HomePage />} />
+      <Route path="/quotes" element={<AllQuotes />} />
       {!isLoggedIn && <Route path="/auth" element={<AuthPage />} />}
-      {isLoggedIn && <Route path="/profile" element={<ProfilePage />} />}
-      {!isLoggedIn && <Navigate to="/auth" />}
+      {isLoggedIn && (
+        <Route
+          path="/profile"
+          element={isLoggedIn ? <ProfilePage /> : <Navigate to="/auth" />}
+        />
+      )}
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );

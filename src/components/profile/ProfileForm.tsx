@@ -31,6 +31,11 @@ const ProfileForm: React.FC = () => {
         { headers: { "Content-Type": "application/json" } }
       );
       console.log("resData: ", resData);
+      if (resData.status === 200) {
+        navigate("/", { replace: true }); // 기존의 history.replace("/"); 는 이렇게 처리해준다
+      } else {
+        alert("passwordChange Error Occur!");
+      }
     } catch (error: any) {
       console.log("error: ", error);
       alert(error.message);
