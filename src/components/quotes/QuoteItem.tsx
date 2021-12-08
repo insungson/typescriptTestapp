@@ -3,7 +3,11 @@ import { Link } from "react-router-dom";
 import { quotesState } from "../../store/quotes-slice";
 import classes from "./QuoteItem.module.css";
 
-const QuoteItem: React.FC<quotesState> = ({ id, author, text }) => {
+const QuoteItem: React.FC<{ id: string; author: string; text: string }> = ({
+  id,
+  author,
+  text,
+}) => {
   return (
     <li className={classes.item}>
       <figure>

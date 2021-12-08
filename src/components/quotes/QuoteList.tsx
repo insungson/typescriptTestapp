@@ -6,11 +6,12 @@ import classes from "./QuoteList.module.css";
 
 // sort 함수
 const sortQuotes = (quotes: quotesState[], ascending: boolean) => {
-  return quotes.sort((quoteA, quoteB) => {
+  console.log("quotes456456: ", quotes);
+  return quotes.slice().sort((quoteA, quoteB) => {
     if (ascending) {
-      return quoteA.id > quoteB.id ? 1 : -1;
+      return quoteA.sortId > quoteB.sortId ? 1 : -1;
     } else {
-      return quoteA.id < quoteB.id ? 1 : -1;
+      return quoteA.sortId < quoteB.sortId ? 1 : -1;
     }
   });
 };

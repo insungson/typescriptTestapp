@@ -20,6 +20,9 @@ const Header: React.FC = () => {
       </Link>
       <nav>
         <ul>
+          <li>
+            <Link to="/quotes">Quotes</Link>
+          </li>
           {!isLoggedIn && (
             <li>
               <Link to="/auth">Login</Link>
@@ -29,9 +32,6 @@ const Header: React.FC = () => {
             <React.Fragment>
               <li>
                 <Link to="/profile">Profile</Link>
-              </li>
-              <li>
-                <Link to="/quotes">Quotes</Link>
               </li>
             </React.Fragment>
           )}

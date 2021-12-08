@@ -4,8 +4,9 @@ export interface quotesState {
   id: string;
   author: string;
   text: string;
+  sortId: number;
 }
-interface commentState {
+export interface commentState {
   id: string;
   text: string;
 }
@@ -20,9 +21,11 @@ const quotesSlice = createSlice({
     getAllQuotes: (state, action) => {
       const { data } = action.payload;
       let tempQuotes = [];
+      let tempnum = 0;
       for (const key in data) {
         const quoteObj = {
           id: key,
+          sortId: tempnum++,
           ...data[key],
         };
         tempQuotes.push(quoteObj);

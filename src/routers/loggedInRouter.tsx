@@ -4,6 +4,7 @@ import HomePage from "../pages/HomePage";
 import AuthPage from "../pages/AuthPage";
 import ProfilePage from "../pages/ProfilePage";
 import AllQuotes from "../pages/AllQuotes";
+import NewQuotes from "../pages/NewQuotes";
 
 import { useAppSelector } from "../store/index";
 
@@ -22,6 +23,7 @@ const LoggedInRouter: React.FC = () => {
           element={isLoggedIn ? <ProfilePage /> : <Navigate to="/auth" />}
         />
       )}
+      {isLoggedIn && <Route path="/new-quote" element={<NewQuotes />} />}
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );
