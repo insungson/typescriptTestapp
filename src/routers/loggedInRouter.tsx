@@ -5,6 +5,8 @@ import AuthPage from "../pages/AuthPage";
 import ProfilePage from "../pages/ProfilePage";
 import AllQuotes from "../pages/AllQuotes";
 import NewQuotes from "../pages/NewQuotes";
+import QuoteDetail from "../pages/QuoteDetail";
+import Comments from "../components/comments/Comments";
 
 import { useAppSelector } from "../store/index";
 
@@ -16,6 +18,13 @@ const LoggedInRouter: React.FC = () => {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/quotes" element={<AllQuotes />} />
+      <Route
+        path="/quotes/:quoteId"
+        element={<QuoteDetail />}
+        children={
+          <Route path="/quotes/:quoteId/comments" element={<QuoteDetail />} />
+        }
+      />
       {!isLoggedIn && <Route path="/auth" element={<AuthPage />} />}
       {isLoggedIn && (
         <Route
@@ -24,6 +33,7 @@ const LoggedInRouter: React.FC = () => {
         />
       )}
       {isLoggedIn && <Route path="/new-quote" element={<NewQuotes />} />}
+
       <Route path="*" element={<Navigate to="/" />} />
     </Routes>
   );

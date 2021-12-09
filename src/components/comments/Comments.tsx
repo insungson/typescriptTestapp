@@ -19,6 +19,7 @@ const Comments: React.FC = () => {
   const commentsList = useAppSelector((state) => state.quotes.comments);
 
   const { quoteId } = params;
+  console.log("comments quoteId: ", quoteId);
 
   // comment리스트를 요청하는 async 함수를 따로 만들어야 한다!
   const requestCommentList = useCallback(
