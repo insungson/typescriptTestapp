@@ -2,12 +2,21 @@ import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, TypedUseSelectorHook, useSelector } from "react-redux";
 import authSlice, { authSliceName } from "./auth-slice";
 import quotesSlice, { quotesSliceName } from "./quotes-slice";
+import createSagaMiddleware from "@redux-saga/core";
+import { call, put, all, fork } from "redux-saga/effects";
+
+const sagaMiddleware = createSagaMiddleware();
+
+function* rootSaga() {
+  yield all([]);
+}
 
 const store = configureStore({
   reducer: {
     [authSliceName]: authSlice,
     [quotesSliceName]: quotesSlice,
   },
+  middleware: [sagaMiddleware],
 });
 
 export type RootState = ReturnType<typeof store.getState>;

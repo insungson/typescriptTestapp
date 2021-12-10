@@ -16,7 +16,8 @@ const Comments: React.FC = () => {
   const params = useParams();
   const dispatch = useDispatch();
 
-  const commentsList = useAppSelector((state) => state.quotes.comments);
+  const commentsList = useAppSelector((state) => state.quotes.comments.data);
+  const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
 
   const { quoteId } = params;
   console.log("comments quoteId: ", quoteId);
@@ -66,7 +67,7 @@ const Comments: React.FC = () => {
           Add a Comment
         </button>
       )}
-      {isAddingComment && quoteId && (
+      {isLoggedIn && isAddingComment && quoteId && (
         <NewCommentForm
           quoteId={quoteId}
           onClosedCommentForm={closeCommentFormHandler}
@@ -78,7 +79,7 @@ const Comments: React.FC = () => {
           <LoadingSpinner />
         </div>
       )}
-      {!isReqCommentsList && commentsList.length > 0 ? (
+      {!isReqCommentsList && commentsList && commentsList.length > 0 ? (
         <CommentsList comments={commentsList} />
       ) : (
         <p className="centered">No comments were added yet!</p>

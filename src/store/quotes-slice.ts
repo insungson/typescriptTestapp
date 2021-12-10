@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { AxiosError } from "axios";
 
 export interface quotesState {
   id: string;
@@ -11,11 +12,23 @@ export interface commentState {
   text: string;
 }
 
+interface commentreqresState {
+  loading: boolean;
+  data: commentState[] | null;
+  error: AxiosError | null;
+}
+
+const commentsInitialState: commentreqresState = {
+  loading: false,
+  data: [],
+  error: null,
+};
+
 const quotesSlice = createSlice({
   name: "quotes",
   initialState: {
     quotes: [] as quotesState[],
-    comments: [] as commentState[],
+    comments: commentsInitialState,
   },
   reducers: {
     getAllQuotes: (state, action) => {
@@ -42,11 +55,20 @@ const quotesSlice = createSlice({
         };
         tempComments.push(commentObj);
       }
-      state.comments = tempComments;
+      state.comments.loading = false;
+      state.comments.data = tempComments;
+    },
+    getCommentsReq: (state, action) => {
+      state.comments.loading = true;
+    },
+    getCommentsError: (state, { payload }) => {
+      state.comments.error = payload;
+      state.comments.loading = false;
     },
   },
 });
 
-export const { getAllQuotes, getcomments } = quotesSlice.actions;
+export const { getAllQuotes, getcomments, getCommentsReq, getCommentsError } =
+  quotesSlice.actions;
 export const quotesSliceName = quotesSlice.name;
 export default quotesSlice.reducer;

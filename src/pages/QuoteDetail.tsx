@@ -46,11 +46,13 @@ const QuoteDetail: React.FC = () => {
             text={singleQuote.text}
             author={singleQuote.author}
           />
-          <div className="centered">
-            <Link className="btn--flat" to={`${match?.pathname}/comments`}>
-              Load Comments
-            </Link>
-          </div>
+          {match && (
+            <div className="centered">
+              <Link className="btn--flat" to={`${match?.pathname}/comments`}>
+                Load Comments
+              </Link>
+            </div>
+          )}
           {match2 !== null && <Comments />}
         </>
       )}

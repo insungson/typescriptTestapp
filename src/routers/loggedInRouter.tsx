@@ -22,7 +22,7 @@ const LoggedInRouter: React.FC = () => {
         path="/quotes/:quoteId"
         element={<QuoteDetail />}
         children={
-          <Route path="/quotes/:quoteId/comments" element={<QuoteDetail />} />
+          <Route path="/quotes/:quoteId/comments" element={<Comments />} />
         }
       />
       {!isLoggedIn && <Route path="/auth" element={<AuthPage />} />}
