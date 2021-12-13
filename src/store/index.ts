@@ -4,11 +4,12 @@ import authSlice, { authSliceName } from "./auth-slice";
 import quotesSlice, { quotesSliceName } from "./quotes-slice";
 import createSagaMiddleware from "@redux-saga/core";
 import { call, put, all, fork } from "redux-saga/effects";
+import quoteSaga from "./quote-saga";
 
 const sagaMiddleware = createSagaMiddleware();
 
 function* rootSaga() {
-  yield all([]);
+  yield all([fork(quoteSaga)]);
 }
 
 const store = configureStore({
@@ -18,6 +19,7 @@ const store = configureStore({
   },
   middleware: [sagaMiddleware],
 });
+sagaMiddleware.run(rootSaga);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

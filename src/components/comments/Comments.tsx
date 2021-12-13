@@ -6,7 +6,7 @@ import { useDispatch } from "react-redux";
 import classes from "./Comments.module.css";
 import LoadingSpinner from "../ui/LoadingSpinner";
 import { FIREBASE_DOMAIN, useAppSelector } from "../../store/index";
-import { getcomments } from "../../store/quotes-slice";
+import { getcomments, getCommentsReq } from "../../store/quotes-slice";
 import NewCommentForm from "./NewCommentForm";
 import CommentsList from "./CommentsList";
 
@@ -17,6 +17,8 @@ const Comments: React.FC = () => {
   const dispatch = useDispatch();
 
   const commentsList = useAppSelector((state) => state.quotes.comments.data);
+  const { loading: reqCommentsListLoading, error: reqCommentsListError } =
+    useAppSelector((state) => state.quotes.comments);
   const isLoggedIn = useAppSelector((state) => state.auth.isLoggedIn);
 
   const { quoteId } = params;
@@ -25,22 +27,24 @@ const Comments: React.FC = () => {
   // comment리스트를 요청하는 async 함수를 따로 만들어야 한다!
   const requestCommentList = useCallback(
     async (quoteId: string) => {
-      try {
-        setIsReqCommentsList(false);
-        const response = await axios.get(
-          `${FIREBASE_DOMAIN}/comments/${quoteId}.json`
-        );
-        if (response.status === 200) {
-          setIsAddingComment(true);
-          dispatch(getcomments({ data: response.data }));
-        } else {
-          throw new Error("Get CommentList Error Occur!");
-        }
-      } catch (error: any) {
-        setIsAddingComment(true);
-        console.log("error: ", error);
-        alert(error.message);
-      }
+      dispatch(getCommentsReq({ quoteId }));
+      // // 아래는 기존의 axios 요청에 따른 redux 처리를 saga로 바꿈!!
+      // try {
+      //   setIsReqCommentsList(false);
+      //   const response = await axios.get(
+      //     `${FIREBASE_DOMAIN}/comments/${quoteId}.json`
+      //   );
+      //   if (response.status === 200) {
+      //     setIsAddingComment(true);
+      //     dispatch(getcomments({ data: response.data }));
+      //   } else {
+      //     throw new Error("Get CommentList Error Occur!");
+      //   }
+      // } catch (error: any) {
+      //   setIsAddingComment(true);
+      //   console.log("error: ", error);
+      //   alert(error.message);
+      // }
     },
     [dispatch, quoteId, getcomments]
   );
@@ -62,7 +66,7 @@ const Comments: React.FC = () => {
   return (
     <section className={classes.comments}>
       <h2>User Comments</h2>
-      {!isAddingComment && (
+      {!isAddingComment && isLoggedIn && (
         <button className="btn" onClick={startAddHandler}>
           Add a Comment
         </button>
@@ -74,12 +78,12 @@ const Comments: React.FC = () => {
           onReqAllComments={requestCommentList}
         />
       )}
-      {isReqCommentsList && (
+      {reqCommentsListLoading && ( // isReqCommentsList -> reqCommentsListLoading 로 교체함
         <div className="centered">
           <LoadingSpinner />
         </div>
       )}
-      {!isReqCommentsList && commentsList && commentsList.length > 0 ? (
+      {!reqCommentsListLoading && commentsList && commentsList.length > 0 ? ( // isReqCommentsList -> reqCommentsListLoading 로 교체함
         <CommentsList comments={commentsList} />
       ) : (
         <p className="centered">No comments were added yet!</p>
